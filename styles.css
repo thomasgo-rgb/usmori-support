@@ -1,0 +1,573 @@
+@font-face {
+  font-family: "Gowun Dodum";
+  src: url("./assets/fonts/GowunDodum-Regular.subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Zen Maru Gothic";
+  src: url("./assets/fonts/ZenMaruGothic-Medium.subset.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("./assets/fonts/Nunito_600SemiBold.subset.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(155,76,87,0.07), transparent 34rem),
+    radial-gradient(circle at 88% 16%, rgba(183,139,81,0.09), transparent 29rem),
+    linear-gradient(145deg, #FFFDF9 0%, #FBF7EF 48%, #F7EFE4 100%);
+  color: #44362F;
+  font-family: "Nunito", "Avenir Next", "Segoe UI", sans-serif;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+body[data-font-state="loading"] .site-header,
+body[data-font-state="loading"] .page,
+body[data-font-state="loading"] .site-footer { visibility: hidden; }
+html[lang="ko"] body { font-family: "Gowun Dodum", "Apple SD Gothic Neo", sans-serif; }
+html[lang="ja"] body { font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif; }
+[lang="ko"] { font-family: "Gowun Dodum", "Apple SD Gothic Neo", sans-serif; }
+[lang="ja"] { font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif; }
+[lang="en"] { font-family: "Nunito", "Avenir Next", "Segoe UI", sans-serif; }
+img { max-width: 100%; }
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.paper-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 24% 90%, rgba(230,235,221,0.30), transparent 20rem),
+    radial-gradient(circle at 76% 4%, rgba(234,229,240,0.25), transparent 18rem);
+  z-index: -1;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  left: 1rem;
+  top: auto;
+  transform: translateY(-200%);
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  background: #FFFDF9;
+  color: #44362F;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(119,102,92,0.16);
+}
+.skip-link:focus { transform: translateY(1rem); }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem clamp(0.75rem, 3vw, 2rem);
+  background: rgba(251,247,239,0.92);
+  border-bottom: 1px solid rgba(233,221,208,0.85);
+  backdrop-filter: blur(10px);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.brand-mark {
+  width: 1.55rem;
+  height: 1.55rem;
+  flex: 0 0 auto;
+  border: 0.17rem solid #9B4C57;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 68% 68%, #F5E6E2 0 0.28rem, transparent 0.29rem),
+    radial-gradient(circle at 32% 72%, #B78B51 0 0.18rem, transparent 0.19rem);
+}
+.brand-text { overflow-wrap: anywhere; }
+
+.language-group {
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.22rem;
+  border: 1px solid #E9DDD0;
+  border-radius: 999px;
+  background: rgba(255,253,249,0.78);
+}
+.language-button {
+  min-height: 2rem;
+  min-width: 2.8rem;
+  padding: 0.25rem 0.55rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.language-button:hover { background: #F5E6E2; }
+.language-button.selected {
+  background: #9B4C57;
+  color: #FFFFFF;
+}
+
+.page {
+  width: 100%;
+  max-width: 68rem;
+  margin: 0;
+  padding: clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 3vw, 2rem) 2rem;
+  outline: none;
+}
+.landing,
+.quiz-card,
+.result-card {
+  margin: 0 auto;
+}
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(1rem, 3vw, 3rem);
+  padding: clamp(1rem, 3vw, 2.5rem);
+  border: 1px solid #E9DDD0;
+  border-radius: 2rem;
+  background: rgba(255,253,249,0.86);
+  box-shadow: 0 18px 48px rgba(119,102,92,0.09);
+}
+.landing-art,
+.result-art {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #E9DDD0;
+  border-radius: 1.7rem;
+  background:
+    radial-gradient(circle at 25% 15%, rgba(255,253,249,0.9), transparent 65%),
+    linear-gradient(145deg, #F3E5CB, #F5E6E2);
+  box-shadow: inset 0 0 3rem rgba(119,102,92,0.07);
+}
+.landing-art { aspect-ratio: 3 / 2; }
+.result-art { aspect-ratio: 3 / 2; }
+.otter-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: normal;
+}
+
+.card-eyebrow {
+  margin: 0 0 0.55rem;
+  color: #9B4C57;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+}
+.display-title {
+  margin: 0;
+  color: #44362F;
+  font-family: "Nunito", "Avenir Next", "Segoe UI", sans-serif;
+  font-size: clamp(2.15rem, 7vw, 4.1rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+html[lang="ko"] .display-title { font-family: "Gowun Dodum", sans-serif; font-weight: 400; }
+html[lang="ja"] .display-title { font-family: "Zen Maru Gothic", sans-serif; font-weight: 500; }
+.intro-body {
+  margin: 0.8rem 0 0;
+  color: #77665C;
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+}
+.disclaimer {
+  display: inline-block;
+  margin: 1rem 0 0;
+  padding: 0.42rem 0.7rem;
+  border: 1px solid #E9DDD0;
+  border-radius: 0.75rem;
+  background: #E6EBDD;
+  color: #44362F;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+.session-note {
+  margin: 0.85rem 0 0;
+  color: #77665C;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+.primary-button {
+  border: 0;
+  background: #9B4C57;
+  color: #FFFFFF;
+  box-shadow: 0 10px 22px rgba(155,76,87,0.18);
+}
+.secondary-button {
+  border: 1px solid #D7C8BB;
+  background: #F7EFE4;
+  color: #44362F;
+}
+.primary-button:hover:not(:disabled),
+.secondary-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+.primary-button:active:not(:disabled),
+.secondary-button:active:not(:disabled) { transform: translateY(0); }
+.primary-button:disabled,
+.secondary-button:disabled {
+  border-color: #E9DDD0;
+  background: #F1E5DE;
+  color: #77665C;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.app-card {
+  max-width: 43rem;
+  margin: 1.25rem auto 0;
+  padding: clamp(1.1rem, 3vw, 1.7rem);
+  border: 1px solid #E9DDD0;
+  border-radius: 1.5rem;
+  background: rgba(255,253,249,0.9);
+}
+.app-card .card-eyebrow { margin-bottom: 0.2rem; }
+.app-title {
+  margin: 0;
+  font-size: clamp(1.25rem, 3.5vw, 1.65rem);
+  line-height: 1.25;
+}
+.app-body {
+  margin: 0.55rem 0 0;
+  overflow-wrap: anywhere;
+  color: #77665C;
+}
+.founder-note {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border-left: 0.25rem solid #B78B51;
+  border-radius: 0.5rem 1rem 1rem 0.5rem;
+  background: #F3E5CB;
+}
+.founder-note .card-eyebrow { margin: 0; color: #77665C; }
+.founder-text { margin: 0.25rem 0 0; font-size: 0.98rem; overflow-wrap: anywhere; }
+
+.quiz-card,
+.result-card {
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid #E9DDD0;
+  border-radius: 2rem;
+  background: rgba(255,253,249,0.92);
+  box-shadow: 0 18px 44px rgba(119,102,92,0.09);
+}
+.progress-row {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.3rem;
+}
+.progress-text {
+  margin: 0;
+  color: #9B4C57;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+.progress-track {
+  height: 0.42rem;
+  overflow: hidden;
+  border: 1px solid #E9DDD0;
+  border-radius: 999px;
+  background: #F5E6E2;
+}
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #B78B51, #9B4C57);
+}
+.question-title,
+.result-title {
+  margin: 0;
+  font-family: "Nunito", "Avenir Next", "Segoe UI", sans-serif;
+  font-size: clamp(1.55rem, 5.2vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+html[lang="ko"] .question-title,
+html[lang="ko"] .result-title { font-family: "Gowun Dodum", sans-serif; font-weight: 400; }
+html[lang="ja"] .question-title,
+html[lang="ja"] .result-title { font-family: "Zen Maru Gothic", sans-serif; font-weight: 500; }
+
+.choices {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  border: 0;
+}
+.choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3.4rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #E9DDD0;
+  border-radius: 1.15rem;
+  background: #F7EFE4;
+  color: #44362F;
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
+}
+.choice:hover { border-color: #B78B51; background: #FBF7EF; }
+.choice.selected {
+  border-color: #9B4C57;
+  background: #F5E6E2;
+  color: #9B4C57;
+  font-weight: 800;
+}
+.choice-check { flex: 0 0 auto; font-size: 1rem; }
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+.quiz-actions > * { flex: 1 1 9.5rem; }
+
+.result-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+}
+.result-tagline {
+  margin: 0.7rem 0 0;
+  color: #77665C;
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+}
+.section-title {
+  margin: 1.45rem 0 0.65rem;
+  font-size: clamp(1.1rem, 3vw, 1.32rem);
+  line-height: 1.3;
+}
+.strength-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+.strength-item {
+  display: grid;
+  grid-template-columns: 1.7rem minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: start;
+}
+.strength-number {
+  display: inline-flex;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: #F5E6E2;
+  color: #9B4C57;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.7rem;
+}
+.strength-text { color: #44362F; }
+.activity-card {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid #E9DDD0;
+  border-radius: 1rem;
+  background: #E6EBDD;
+}
+.activity-card .section-title { margin-top: 0; }
+.activity-text { margin: 0; color: #44362F; }
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+.result-actions > * { flex: 1 1 10rem; }
+.result-actions .secondary-button { margin-top: 0; }
+.action-status {
+  min-height: 1.5rem;
+  margin: 0.55rem 0 0;
+  color: #77665C;
+  font-size: 0.9rem;
+}
+.result-navigation { margin-top: 1rem; }
+
+.site-footer {
+  display: grid;
+  gap: 0.2rem;
+  padding: 1rem clamp(0.75rem, 3vw, 2rem) 1.4rem;
+  color: #77665C;
+  font-size: 0.78rem;
+  text-align: center;
+}
+.footer-note,
+.footer-working { margin: 0; }
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+}
+.footer-links a,
+.legal-nav a,
+.legal-contact {
+  color: #7D3946;
+  text-underline-offset: 0.2em;
+}
+.legal-page {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+.legal-card {
+  padding: clamp(1.1rem, 4vw, 2.4rem);
+  border: 1px solid #E9DDD0;
+  border-radius: 1.6rem;
+  background: rgba(255,253,249,0.9);
+  box-shadow: 0 18px 48px rgba(119,102,92,0.08);
+}
+.legal-card h1 { margin: 0; line-height: 1.2; }
+.legal-card h2 { margin: 1.8rem 0 0.5rem; font-size: 1.18rem; }
+.legal-card h3 { margin: 1.25rem 0 0.35rem; font-size: 1.02rem; }
+.legal-card p,
+.legal-card ul { margin: 0.45rem 0 0; }
+.legal-card ul { padding-left: 1.3rem; }
+.legal-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+}
+.legal-section {
+  padding-top: 0.4rem;
+  scroll-margin-top: 5rem;
+}
+.legal-muted { color: #77665C; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.noscript-card {
+  max-width: 34rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  border: 1px solid #E9DDD0;
+  border-radius: 1rem;
+  background: #FFFDF9;
+  text-align: center;
+}
+.noscript-card p { margin: 0.4rem 0 0; }
+
+:focus-visible {
+  outline: 3px solid #B78B51;
+  outline-offset: 3px;
+}
+.display-title:focus,
+.question-title:focus {
+  outline: none;
+}
+
+@media (max-width: 760px) {
+  .hero-layout,
+  .result-layout { grid-template-columns: 1fr; }
+  .landing-art { aspect-ratio: 4 / 3; }
+  .progress-row { grid-template-columns: minmax(3rem, auto) minmax(0, 1fr); }
+  .quiz-actions,
+  .result-actions { align-items: stretch; }
+  .quiz-actions > *,
+  .result-actions > * { flex-basis: 100%; }
+  .site-header { align-items: flex-start; }
+  .language-group { flex-wrap: wrap; justify-content: flex-end; }
+}
+@media (max-width: 400px) {
+  .brand-text { font-size: 0.95rem; }
+  .language-button { min-width: 2.45rem; padding: 0.22rem 0.4rem; }
+  .page { padding-left: 0.65rem; padding-right: 0.65rem; }
+  .choice { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Keep Korean words together at narrow widths without trapping long English words. */
+html[lang="ko"] .display-title, html[lang="ko"] .question-title { word-break: keep-all; overflow-wrap: normal; }
+
+#site-footer:empty { display: none; }
+
+.action-status button { margin-top: 0.6rem; }
+.copy-link { display: block; width: 100%; max-width: 100%; font: inherit; margin-top: 0.6rem; }
+
+[data-locale="ko"] { font-family: "Gowun Dodum", sans-serif; }
+[data-locale="ja"] { font-family: "Zen Maru Gothic", sans-serif; }
+[data-locale="en"] { font-family: "Nunito", sans-serif; }
