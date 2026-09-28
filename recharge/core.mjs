@@ -1,0 +1,7 @@
+export const TYPES=['solve','listen','hug','quiet'];
+export function score(answers){if(!Array.isArray(answers)||answers.length!==8||[...answers].some(a=>!TYPES.includes(a)))throw new Error('Complete eight answers first');const counts=Object.fromEntries(TYPES.map(k=>[k,answers.filter(x=>x===k).length]));const max=Math.max(...Object.values(counts));return {counts,types:TYPES.filter(k=>counts[k]===max)}}
+export function safeTypes(value){return [...new Set(String(value||'').split(','))].filter(x=>TYPES.includes(x)).slice(0,4)}
+export function resultLink(base,lang,types){const u=new URL(base);u.search='';u.hash='';u.searchParams.set('lang',lang==='ja'?'ja':'ko');u.searchParams.set('result',safeTypes(types.join(',')).join(','));return u.href}
+export function savedResult(types,lang,date=new Date().toISOString()){const t=safeTypes(types.join(','));if(!t.length)throw new Error('No result');return {quiz:'recharge-01',types:t,lang:lang==='ja'?'ja':'ko',date}}
+export function normalizeSaved(value){if(!Array.isArray(value))return [];return value.slice(0,20).filter(x=>x&&x.quiz==='recharge-01'&&Array.isArray(x.types)&&safeTypes(x.types.join(',')).length&&typeof x.date==='string'&&!Number.isNaN(Date.parse(x.date))).map(x=>savedResult(x.types,x.lang,x.date))}
+export const catalog=[{id:'recharge-01',category:'comfort',questions:8,date:'2026-09-28',title:{ko:'나는 어떤 위로에\n충전될까?',ja:'わたしの心は、\n何で充電される？'},description:{ko:'마음 배터리가 깜빡일 때,\n나에게 꼭 맞는 다정함을 찾아요.',ja:'心の電池が切れそうなとき。\n自分に合うやさしさを見つけよう。'}}];
